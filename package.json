@@ -1,0 +1,27 @@
+{
+  "name": "basic-lifts-r-us",
+  "version": "1.0.0",
+  "description": "I am going to learn to crawl before I try to fly",
+  "main": "./src/index.js",
+  "scripts": {
+    "test": "test",
+    "build": "tsc -p ./",
+    "start": "npm run build & node ./dist/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BlueCodeThree/basic-lifts-r-us.git"
+  },
+  "author": "Carlie Hamilton",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/BlueCodeThree/basic-lifts-r-us/issues"
+  },
+  "homepage": "https://github.com/BlueCodeThree/basic-lifts-r-us#readme",
+  "dependencies": {
+    "@types/node": "^13.1.4",
+    "syncprompt": "^2.0.0",
+    "tsc": "^1.20150623.0",
+    "typescript": "^3.7.4"
+  }
+}
