@@ -60,6 +60,7 @@ This is a command line interface for the lift.
 - "up pressed on level 4"
 - "3"
 - "pass" or "p"
+- "quit", "q", "exit", or "e"
 
 Example usage: -
 
@@ -83,6 +84,8 @@ What level would you like to go to?
 > 3```
 
 - To get the lift moving/stop entering instructions, enter the word "pass" or simply "p"
+
+- To exit/shut down the lift, type "exit", "quit", "e" or "q".
 
 ## Testing
 
