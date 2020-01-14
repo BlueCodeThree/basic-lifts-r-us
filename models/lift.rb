@@ -12,11 +12,13 @@ class Lift
 
     def add_instruction(level, type)
         @instructions << {level: level, type: type}
-        puts @instructions
+        set_top_floor_in_instructions
+        set_bottom_floor_in_instructions
     end
 
     def start_lift
-        if @instructions[0][:level] > @current_floor
+        instruction = @instructions[0][:level]
+        if instruction > @current_floor || instruction == 1
             @current_direction = "UP"
         else
             @current_direction = "DOWN"
@@ -41,12 +43,16 @@ class Lift
     end
 
     def set_top_floor_in_instructions
-        @max_floor_in_instructions = @instructions.max_by{|k| k[:level] }[:level]
-        puts @max_floor_in_instructions
+        @max_floor_in_instructions = @instructions.max_by{|k| k[:level] }[:level].to_i
     end
 
-    def bottom_floor_in_instructions
-        @min_floor_in_instructions = @instructions.min_by{|k| k[:level] }[:level]
+    def set_bottom_floor_in_instructions
+        @min_floor_in_instructions = @instructions.min_by{|k| k[:level] }[:level].to_i
+    end
+
+    def delete_instructions(instruction)
+        instructions_with_current_floor_removed = @instructions.select { |i| i[:level] != @current_floor}
+        @instructions = instructions_with_current_floor_removed
     end
 
     def open_doors
@@ -54,13 +60,12 @@ class Lift
             case @current_direction
             when "UP"
                 if (instruction[:type] == "UP" || instruction[:type] == "LIFT") && (@current_floor == instruction[:level])
-                    set_top_floor_in_instructions
-                    delete_instructions = @instructions.select { |instruction| instruction[:level] != @current_floor }
-                    @instructions = delete_instructions
+                    delete_instructions(instruction)
                     return true
                 end
             when "DOWN"
                 if ( instruction[:type]== "DOWN" ||  instruction[:type]=="LIFT") && (@current_floor == instruction[:level])
+                    delete_instructions(instruction)
                     return true
                 end
             end

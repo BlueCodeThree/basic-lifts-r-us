@@ -25,11 +25,14 @@ class LiftController
             when "DOWN"
                 @lift_model.add_instruction(level, direction)
                 @lift_view.lift_called(level, direction)
-            when "PASS"
+            when "PASS", "P"
                 return
             when "1", "2", "3","4", "5", "6", "7", "8", "9", "10"
                 @lift_model.add_instruction(direction.to_i, "LIFT")
                 @lift_view.floor_pressed_in_lift(direction)
+            when "EXIT", "QUIT", "E", "Q"
+                @lift_view.exit
+                abort
             end
         end
     end
@@ -54,34 +57,62 @@ class LiftController
 
     def change_directions
         @lift_model.change_directions
+        @lift_view.change_directions(@lift_model.current_direction)
+    end
+
+    def stop_or_change_directions
+        case @lift_model.current_direction
+        when "UP"
+            if @lift_model.current_floor == @lift_model.max_floor_in_instructions
+                return true if check_lift_stop
+                change_directions
+                return true
+            end
+        when "DOWN"
+            if @lift_model.current_floor == @lift_model.min_floor_in_instructions
+                return true if check_lift_stop
+                change_directions
+                return true
+            end
+        end
+        false
     end
 
     def move_up
+        if @lift_model.current_floor == 1
+            if doors_should_open
+                open_doors
+                return if stop_or_change_directions
+            end
+        end
         while @lift_model.current_floor < @lift_model.top_floor
             @lift_view.move_up(@lift_model.move_up)
             if doors_should_open
                 open_doors
-                if @lift_model.current_floor == @lift_model.max_floor_in_instructions
-                    return check_lift_stop
-                    change_directions
-                end
-                return
+                return if stop_or_change_directions
             end
+
+            return if stop_or_change_directions
+
             @lift_view.display_current_instructions(@lift_model.instructions)
             get_instruction
         end
     end
 
     def move_down
+        if doors_should_open
+            open_doors
+            return if stop_or_change_directions
+        end
         while @lift_model.current_floor >= 1
             @lift_view.move_down(@lift_model.move_down)
             if doors_should_open
                 open_doors
-                if @lift_model.current_floor == @lift_model.min_floor_in_instructions
-                    return check_lift_stop
-                end
-                return
+                return if stop_or_change_directions
             end
+
+            return if stop_or_change_directions
+
             @lift_view.display_current_instructions(@lift_model.instructions)
             get_instruction
         end
@@ -98,9 +129,6 @@ class LiftController
                 move_down
             when "IDLE"
                 startup
-            when "QUIT", "EXIT"
-                @lift_view.exit
-                break
             end
         end
     end

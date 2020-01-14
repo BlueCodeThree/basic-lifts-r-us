@@ -2,6 +2,7 @@ class LiftView
 
     def idle(current_floor)
         puts "LIFT IS IDLE AT LEVEL #{current_floor}"
+        puts ""
     end
 
     def instruction
@@ -24,6 +25,10 @@ class LiftView
     def move_down(current_floor)
         puts ""
         puts "LIFT MOVES DOWN TO LEVEL #{current_floor}"
+    end
+
+    def change_directions(direction)
+        puts "LIFT NOW MOVING #{direction}"
     end
 
     def display_current_instructions(instructions)
