@@ -8,7 +8,6 @@ class LiftController
     end
 
     def startup
-        @lift_view.start
         @lift_view.idle(@lift_model.current_floor)
         get_instruction
         @lift_model.start_lift
@@ -48,10 +47,13 @@ class LiftController
     def check_lift_stop
         if @lift_model.instructions.length == 0
             @lift_model.current_direction = "IDLE"
-            @lift_view.idle(@lift_model.current_floor)
             return true
         end
         return false
+    end
+
+    def change_directions
+        @lift_model.change_directions
     end
 
     def move_up
@@ -60,6 +62,22 @@ class LiftController
             if doors_should_open
                 open_doors
                 if @lift_model.current_floor == @lift_model.max_floor_in_instructions
+                    return check_lift_stop
+                    change_directions
+                end
+                return
+            end
+            @lift_view.display_current_instructions(@lift_model.instructions)
+            get_instruction
+        end
+    end
+
+    def move_down
+        while @lift_model.current_floor >= 1
+            @lift_view.move_down(@lift_model.move_down)
+            if doors_should_open
+                open_doors
+                if @lift_model.current_floor == @lift_model.min_floor_in_instructions
                     return check_lift_stop
                 end
                 return
@@ -77,9 +95,12 @@ class LiftController
             when "UP"
                 move_up
             when "DOWN"
+                move_down
             when "IDLE"
-
-            when "QUIT"
+                startup
+            when "QUIT", "EXIT"
+                @lift_view.exit
+                break
             end
         end
     end

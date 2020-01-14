@@ -16,21 +16,37 @@ class Lift
     end
 
     def start_lift
-        @current_direction = "UP"
+        if @instructions[0][:level] > @current_floor
+            @current_direction = "UP"
+        else
+            @current_direction = "DOWN"
+        end
+    end
+
+    def change_directions
+        case @current_direction
+        when "UP"
+            @current_direction = "DOWN"
+        when "DOWN"
+            @current_direction = "UP"
+        end
     end
 
     def move_up
         return @current_floor += 1
     end
 
+    def move_down
+        return @current_floor -= 1
+    end
+
     def set_top_floor_in_instructions
         @max_floor_in_instructions = @instructions.max_by{|k| k[:level] }[:level]
-        puts @top_floor_in_instructions
+        puts @max_floor_in_instructions
     end
 
     def bottom_floor_in_instructions
-        if @current_floor == @instructions.min_by{|k| k[:level] }
-        end
+        @min_floor_in_instructions = @instructions.min_by{|k| k[:level] }[:level]
     end
 
     def open_doors

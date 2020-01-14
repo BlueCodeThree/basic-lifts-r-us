@@ -1,7 +1,4 @@
 class LiftView
-    def start
-        puts "LIFT STARTED"
-    end
 
     def idle(current_floor)
         puts "LIFT IS IDLE AT LEVEL #{current_floor}"
@@ -24,6 +21,11 @@ class LiftView
         puts "LIFT MOVES UP TO LEVEL #{current_floor}"
     end
 
+    def move_down(current_floor)
+        puts ""
+        puts "LIFT MOVES DOWN TO LEVEL #{current_floor}"
+    end
+
     def display_current_instructions(instructions)
         instructions.each do |instruction|
             case instruction[:type]
@@ -44,5 +46,9 @@ class LiftView
     def close_doors
         puts ""
         puts "LIFT DOORS CLOSE"
+    end
+
+    def exit
+        puts "LIFT SHUTTING DOWN"
     end
 end
