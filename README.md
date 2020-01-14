@@ -78,10 +78,12 @@ You can replace "up" with "down" and the number with any number from 1 to 10. An
 
 As many levels can be entered at any time there is a prompt. A passenger can call for a lift from another floor while the doors are open and other passengers are entering the floor they wish to go to.
 
-```LIFT DOORS OPEN
+```
+LIFT DOORS OPEN
 What level would you like to go to?
 > up pressed on level 4
-> 3```
+> 3
+```
 
 - To get the lift moving/stop entering instructions, enter the word "pass" or simply "p"
 
