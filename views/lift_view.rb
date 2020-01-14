@@ -15,8 +15,8 @@ class LiftView
         puts "LEVEL #{level} #{direction} ILLUMINATED"
     end
 
-    def start_lift
-
+    def floor_pressed_in_lift(level)
+        puts "LIFT ILLUMINATES LEVEL #{level}"
     end
 
     def move_up(current_floor)
@@ -26,8 +26,11 @@ class LiftView
 
     def display_current_instructions(instructions)
         instructions.each do |instruction|
-            instruction.each do |level, direction|
-                puts "LEVEL #{level} ILLUMINATED"
+            case instruction[:type]
+            when "UP", "DOWN"
+                puts "LEVEL #{instruction[:level]} #{instruction[:type]} ILLUMINATED"
+            when "LIFT"
+                puts "LIFT ILLUMINATES LEVEL #{instruction[:level]}"
             end
         end
     end
@@ -35,6 +38,7 @@ class LiftView
     def open_doors
         puts ""
         puts "LIFT DOORS OPEN"
+        puts "What level would you like to go to?"
     end
 
     def close_doors
