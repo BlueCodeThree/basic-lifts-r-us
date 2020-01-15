@@ -62,6 +62,8 @@ This is a command line interface for the lift.
 - "pass" or "p"
 - "quit", "q", "exit", or "e"
 
+Please note that the lift will wait until you have finished entering instructions. Press "p" or "pass" to move to the next level. 
+
 Example usage: -
 
 - To call a lift to come to you (calling a lift from outside the lift), use the following command:

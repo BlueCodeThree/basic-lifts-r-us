@@ -42,6 +42,24 @@ class LiftView
         end
     end
 
+    def help
+        puts ""
+        puts "-- HELP --"
+        puts ""
+        puts "To press a button from the outside of the lift:-"
+        puts "'up pressed on level 4'"
+        puts ""
+        puts "To stop entering instructions and get the lift moving:-"
+        puts "'pass' or 'p'"
+        puts ""
+        puts "To enter a number from inside the lifts:-"
+        puts "'3'"
+        puts ""
+        puts "To exit from the program:-"
+        puts "'quit', 'q', 'exit' or 'e'"
+        puts ""
+    end
+
     def open_doors
         puts ""
         puts "LIFT DOORS OPEN"
